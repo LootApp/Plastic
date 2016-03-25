@@ -1,0 +1,4 @@
+language: swift
+xcode_project: Plastic.xcodeproj
+xcode_scheme: Plastic
+osx_image: xcode7.3
