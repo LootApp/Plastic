@@ -1,15 +1,15 @@
 //
-//  LuhnSwiftTests.swift
-//  LuhnSwiftTests
+//  PlasticTests.swift
+//  PlasticTests
 //
 //  Created by Kyle McAlpine on 25/03/2016.
 //  Copyright © 2016 Loot Financial Services Ltd. All rights reserved.
 //
 
 import XCTest
-@testable import LuhnSwift
+@testable import Plastic
 
-class LuhnSwiftTests: XCTestCase {
+class PlasticTests: XCTestCase {
     var validNumbers: [[String : String]]!
     var invalidNumbers: [String]!
     
@@ -25,16 +25,14 @@ class LuhnSwiftTests: XCTestCase {
         for numberData in self.validNumbers {
             let number = numberData["number"]!
             let type = numberData["type"]!
-            XCTAssertTrue(number.luhn())
-            XCTAssertTrue(try! number.cardType().description.lowercaseString == type)
+            XCTAssertTrue(number.plastic_luhnValidate())
+            XCTAssertTrue(try! number.plastic_cardType().description.lowercaseString == type)
         }
     }
     
     func testInvalidNumbers() {
         for number in self.invalidNumbers {
-            print(number.luhn())
-            print()
-            XCTAssertFalse(number.luhn())
+            XCTAssertFalse(number.plastic_luhnValidate())
         }
     }
 }

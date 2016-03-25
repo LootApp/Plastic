@@ -1,14 +1,46 @@
 //
-//  Luhn.swift
-//  LuhnSwift
+//  Plastic.swift
+//  Plastic
 //
 //  Created by Kyle McAlpine on 25/03/2016.
 //  Copyright © 2016 Loot Financial Services Ltd. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-enum CardType: CustomStringConvertible {
+public protocol Luhnable {
+    func plastic_luhnValidate() -> Bool
+}
+
+extension String: Luhnable {
+    public func plastic_luhnValidate() -> Bool {
+        let formatted = self.stringForProcessing()
+        guard formatted.characters.count >= 9 else { return false }
+        
+        var reversedString = ""
+        
+        formatted.enumerateSubstringsInRange(formatted.startIndex..<formatted.endIndex, options: [.Reverse, .ByComposedCharacterSequences]) { (substring, substringRange, enclosingRange, stop) in
+            guard let substring = substring else { return }
+            reversedString += substring
+        }
+        
+        var oddSum = 0
+        var evenSum = 0
+        
+        for i: Int in 0..<reversedString.characters.count {
+            guard let digit = Int(String(reversedString.characters[reversedString.characters.startIndex.advancedBy(i)])) else { continue }
+            
+            if i % 2 == 0 {
+                evenSum += digit
+            } else {
+                oddSum += digit / 5 + (2 * digit) % 10
+            }
+        }
+        return (oddSum + evenSum) % 10 == 0
+    }
+}
+
+public enum CardType: CustomStringConvertible {
     case Amex
     case DinersClub
     case Discover
@@ -35,7 +67,7 @@ enum CardType: CustomStringConvertible {
         return [.Amex, .DinersClub, .Discover, .JCB, .Mastercard, .Visa]
     }
     
-    var description: String {
+    public var description: String {
         switch self {
         case Amex:          return "Amex"
         case DinersClub:    return "Diners Club"
@@ -47,47 +79,20 @@ enum CardType: CustomStringConvertible {
     }
 }
 
-enum LuhnError: ErrorType {
-    case InvalidNumber
+public enum LuhnError: ErrorType {
+    case InvalidCardNumber
 }
 
-protocol Luhnable {
-    func luhn() throws -> Bool
-    func cardType() throws -> CardType
+public protocol CardTypeConvertible: Luhnable {
+    func plastic_cardType() throws -> CardType
 }
 
-extension String: Luhnable {
-    func luhn() -> Bool {
-        let formatted = self.stringForProcessing()
-        guard formatted.characters.count >= 9 else { return false }
-        
-        var reversedString = ""
-        
-        formatted.enumerateSubstringsInRange(formatted.startIndex..<formatted.endIndex, options: [.Reverse, .ByComposedCharacterSequences]) { (substring, substringRange, enclosingRange, stop) in
-            guard let substring = substring else { return }
-            reversedString += substring
-        }
-        
-        var oddSum = 0
-        var evenSum = 0
-        
-        for i: Int in 0..<reversedString.characters.count {
-            guard let digit = Int(String(reversedString.characters[reversedString.characters.startIndex.advancedBy(i)])) else { continue }
-            
-            if i % 2 == 0 {
-                evenSum += digit
-            } else {
-                oddSum += digit / 5 + (2 * digit) % 10
-            }
-        }
-        return (oddSum + evenSum) % 10 == 0
-    }
-    
-    func cardType() throws -> CardType {
-        guard self.luhn() else { throw LuhnError.InvalidNumber }
+extension String: CardTypeConvertible {
+    public func plastic_cardType() throws -> CardType {
+        guard self.plastic_luhnValidate() else { throw LuhnError.InvalidCardNumber }
         
         let formatted = self.stringForProcessing()
-        guard formatted.characters.count >= 9 else { throw LuhnError.InvalidNumber }
+        guard formatted.characters.count >= 9 else { throw LuhnError.InvalidCardNumber }
         
         var type: CardType?
         for cardType in CardType.allCases {
@@ -97,7 +102,7 @@ extension String: Luhnable {
             }
         }
         if let type = type { return type }
-        throw LuhnError.InvalidNumber
+        throw LuhnError.InvalidCardNumber
     }
     
     private func stringForProcessing() -> String {
