@@ -10,27 +10,31 @@ import XCTest
 @testable import LuhnSwift
 
 class LuhnSwiftTests: XCTestCase {
+    var validNumbers: [[String : String]]!
+    var invalidNumbers: [String]!
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        let path = NSBundle(forClass: self.dynamicType).pathForResource("TestCardNumbers", ofType: "plist")!
+        let testNumbers = NSDictionary(contentsOfFile: path)!
+        self.validNumbers = testNumbers["valid"] as! [[String : String]]
+        self.invalidNumbers = testNumbers["invalid"] as! [String]
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
+    func testValidNumbers() {
+        for numberData in self.validNumbers {
+            let number = numberData["number"]!
+            let type = numberData["type"]!
+            XCTAssertTrue(number.luhn())
+            XCTAssertTrue(try! number.cardType().description.lowercaseString == type)
         }
     }
     
+    func testInvalidNumbers() {
+        for number in self.invalidNumbers {
+            print(number.luhn())
+            print()
+            XCTAssertFalse(number.luhn())
+        }
+    }
 }
