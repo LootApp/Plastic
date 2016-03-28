@@ -1,5 +1,6 @@
 <h1 align="center">Plastic</h1>
 
+:credit_card:
 <p align="center">
   Luhn validation and card types for credit/debit card numbers
 </p>
