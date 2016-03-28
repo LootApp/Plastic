@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		AF4AE9551CA542E400187448 /* Plastic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF4AE94A1CA542E400187448 /* Plastic.framework */; };
-		AF4AE96C1CA5B3B200187448 /* Plastic.h in Headers */ = {isa = PBXBuildFile; fileRef = AF4AE9691CA5B3B200187448 /* Plastic.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AF4AE96D1CA5B3B200187448 /* Plastic.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4AE96A1CA5B3B200187448 /* Plastic.swift */; };
 		AF4AE9721CA5B3F200187448 /* PlasticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4AE96F1CA5B3F200187448 /* PlasticTests.swift */; };
 		AF4AE9731CA5B3F200187448 /* TestCardNumbers.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF4AE9701CA5B3F200187448 /* TestCardNumbers.plist */; };
+		AF4AE97D1CA9972100187448 /* Plastic.h in Headers */ = {isa = PBXBuildFile; fileRef = AF4AE97A1CA9972100187448 /* Plastic.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AF4AE97E1CA9972100187448 /* Plastic.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4AE97B1CA9972100187448 /* Plastic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,12 +27,12 @@
 /* Begin PBXFileReference section */
 		AF4AE94A1CA542E400187448 /* Plastic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Plastic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF4AE9541CA542E400187448 /* PlasticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlasticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		AF4AE9681CA5B3B200187448 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Plastic/Info.plist; sourceTree = SOURCE_ROOT; };
-		AF4AE9691CA5B3B200187448 /* Plastic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Plastic.h; path = Plastic/Plastic.h; sourceTree = SOURCE_ROOT; };
-		AF4AE96A1CA5B3B200187448 /* Plastic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Plastic.swift; path = Plastic/Plastic.swift; sourceTree = SOURCE_ROOT; };
 		AF4AE96E1CA5B3F200187448 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PlasticTests/Info.plist; sourceTree = SOURCE_ROOT; };
 		AF4AE96F1CA5B3F200187448 /* PlasticTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlasticTests.swift; path = PlasticTests/PlasticTests.swift; sourceTree = SOURCE_ROOT; };
 		AF4AE9701CA5B3F200187448 /* TestCardNumbers.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = TestCardNumbers.plist; path = PlasticTests/TestCardNumbers.plist; sourceTree = SOURCE_ROOT; };
+		AF4AE9791CA9972100187448 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AF4AE97A1CA9972100187448 /* Plastic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plastic.h; sourceTree = "<group>"; };
+		AF4AE97B1CA9972100187448 /* Plastic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plastic.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +57,7 @@
 		AF4AE9401CA542E400187448 = {
 			isa = PBXGroup;
 			children = (
-				AF4AE94C1CA542E400187448 /* Plastic */,
+				AF4AE9781CA9972100187448 /* Sources */,
 				AF4AE9581CA542E400187448 /* PlasticTests */,
 				AF4AE94B1CA542E400187448 /* Products */,
 			);
@@ -72,17 +72,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AF4AE94C1CA542E400187448 /* Plastic */ = {
-			isa = PBXGroup;
-			children = (
-				AF4AE9681CA5B3B200187448 /* Info.plist */,
-				AF4AE9691CA5B3B200187448 /* Plastic.h */,
-				AF4AE96A1CA5B3B200187448 /* Plastic.swift */,
-			);
-			name = Plastic;
-			path = LuhnSwift;
-			sourceTree = "<group>";
-		};
 		AF4AE9581CA542E400187448 /* PlasticTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +83,16 @@
 			path = LuhnSwiftTests;
 			sourceTree = "<group>";
 		};
+		AF4AE9781CA9972100187448 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				AF4AE9791CA9972100187448 /* Info.plist */,
+				AF4AE97A1CA9972100187448 /* Plastic.h */,
+				AF4AE97B1CA9972100187448 /* Plastic.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -101,7 +100,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF4AE96C1CA5B3B200187448 /* Plastic.h in Headers */,
+				AF4AE97D1CA9972100187448 /* Plastic.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,7 +203,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF4AE96D1CA5B3B200187448 /* Plastic.swift in Sources */,
+				AF4AE97E1CA9972100187448 /* Plastic.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,7 +326,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Plastic/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -347,7 +346,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Plastic/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
