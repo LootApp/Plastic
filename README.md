@@ -1,6 +1,8 @@
 <h1 align="center">Plastic</h1>
 
-:credit_card:
+<p align="center">
+  <img src="http://emojipedia-us.s3.amazonaws.com/cache/26/9a/269a5bacd4afc699e47a6ddea49b592d.png" width=60 height=60>
+</p>
 <p align="center">
   Luhn validation and card types for credit/debit card numbers
 </p>
