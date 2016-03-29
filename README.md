@@ -13,6 +13,12 @@
     <a href="https://codecov.io/github/LootApp/Plastic?branch=master"><img src="https://codecov.io/github/LootApp/Plastic/coverage.svg?branch=master"></a>
     <img src="https://img.shields.io/badge/package%20managers-SPM%20%7C%20Carthage-yellow.svg">
 </p>
+
+<br>
+
 <p align="center">
-  Greatly inspired by <a href="https://twitter.com/maxkramer">Max Kramer's</a> <a href="https://github.com/MaxKramer/ObjectiveLuhn">Objective-Luhn</a>
+  Here are some useful resources on the Luhn algorithm: <br>
+
+  https://en.wikipedia.org/wiki/Luhn_algorithm <br>
+  https://www.rosettacode.org/wiki/Luhn_test_of_credit_card_numbers#Objective-C
 </p>
