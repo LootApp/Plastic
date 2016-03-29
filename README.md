@@ -22,3 +22,9 @@
   https://en.wikipedia.org/wiki/Luhn_algorithm <br>
   https://www.rosettacode.org/wiki/Luhn_test_of_credit_card_numbers
 </p>
+
+<br>
+
+<p align="center">
+  Thank you to <a href="https://twitter.com/MaxKramer">Max Kramer</a> for the <a href="https://github.com/maxkramer/objectiveluhn">initial inspiration</a>.
+</p>
