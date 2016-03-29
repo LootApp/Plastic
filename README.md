@@ -20,5 +20,5 @@
   Here are some useful resources on the Luhn algorithm: <br>
 
   https://en.wikipedia.org/wiki/Luhn_algorithm <br>
-  https://www.rosettacode.org/wiki/Luhn_test_of_credit_card_numbers#Objective-C
+  https://www.rosettacode.org/wiki/Luhn_test_of_credit_card_numbers
 </p>
