@@ -14,28 +14,25 @@ public protocol Luhnable {
 
 extension String: Luhnable {
     public func plastic_luhnValidate() -> Bool {
-        let formatted = self.stringForProcessing()
-        guard formatted.characters.count >= 9 else { return false }
+        let cleanString = self.removeNonDigits()
+        guard cleanString.characters.count > 0 else { return false }
         
-        var reversedString = ""
-        
-        formatted.enumerateSubstringsInRange(formatted.startIndex..<formatted.endIndex, options: [.Reverse, .ByComposedCharacterSequences]) { (substring, substringRange, enclosingRange, stop) in
-            guard let substring = substring else { return }
-            reversedString += substring
-        }
-        
+        var isOdd = true // Luhn number positions begin at 1, which is odd
         var oddSum = 0
         var evenSum = 0
         
-        for i: Int in 0..<reversedString.characters.count {
-            guard let digit = Int(String(reversedString.characters[reversedString.characters.startIndex.advancedBy(i)])) else { continue }
-            
-            if i % 2 == 0 {
-                evenSum += digit
+        for i in (cleanString.characters.count - 1).stride(through: 0, by: -1) {
+            guard let digit = Int(String(cleanString.characters[cleanString.characters.startIndex.advancedBy(i)])) else { continue }
+
+            if isOdd {
+                oddSum += digit
             } else {
-                oddSum += digit / 5 + (2 * digit) % 10
+                evenSum += digit / 5 + (2 * digit) % 10
             }
+            
+            isOdd = !isOdd
         }
+
         return (oddSum + evenSum) % 10 == 0
     }
 }
@@ -91,7 +88,7 @@ extension String: CardTypeConvertible {
     public func plastic_cardType() throws -> CardType {
         guard self.plastic_luhnValidate() else { throw LuhnError.InvalidCardNumber }
         
-        let formatted = self.stringForProcessing()
+        let formatted = self.removeNonDigits()
         guard formatted.characters.count >= 9 else { throw LuhnError.InvalidCardNumber }
         
         var type: CardType?
@@ -104,8 +101,11 @@ extension String: CardTypeConvertible {
         if let type = type { return type }
         throw LuhnError.InvalidCardNumber
     }
-    
-    private func stringForProcessing() -> String {
+}
+
+// Helper
+extension String {
+    private func removeNonDigits() -> String {
         let illegalCharacters = NSCharacterSet.decimalDigitCharacterSet().invertedSet
         let components = self.componentsSeparatedByCharactersInSet(illegalCharacters)
         return components.joinWithSeparator("")
