@@ -16,11 +16,11 @@ extension String: Luhnable {
     public func plastic_luhnValidate() -> Bool {
         let cleanString = self.removeNonDigits()
         guard cleanString.characters.count > 0 else { return false }
-        
+
         var isOdd = true // Luhn number positions begin at 1, which is odd
         var oddSum = 0
         var evenSum = 0
-        
+
         for i in (cleanString.characters.count - 1).stride(through: 0, by: -1) {
             guard let digit = Int(String(cleanString.characters[cleanString.characters.startIndex.advancedBy(i)])) else { continue }
 
@@ -29,7 +29,7 @@ extension String: Luhnable {
             } else {
                 evenSum += digit / 5 + (2 * digit) % 10
             }
-            
+
             isOdd = !isOdd
         }
 
@@ -42,35 +42,35 @@ public enum CardType: CustomStringConvertible {
     case DinersClub
     case Discover
     case JCB
-    case Mastercard
+    case MasterCard
     case Visa
-    
+
     var regexString: String {
         switch self {
         case .Amex:         return "^3[47][0-9]{5,}$"
         case .DinersClub:   return  "^3(?:0[0-5]|[68][0-9])[0-9]{4,}$"
         case .Discover: 	return "^6(?:011|5[0-9]{2})[0-9]{3,}$"
         case .JCB:          return "^(?:2131|1800|35[0-9]{3})[0-9]{3,}$"
-        case Mastercard:    return "^5[1-5][0-9]{5,}$"
+        case .MasterCard:   return "^5[1-5][0-9]{5,}$"
         case .Visa:         return "^4[0-9]{6,}$"
         }
     }
-    
+
     var regex: NSRegularExpression {
         return try! NSRegularExpression(pattern: self.regexString, options: [])
     }
-    
+
     static var allCases: [CardType] {
-        return [.Amex, .DinersClub, .Discover, .JCB, .Mastercard, .Visa]
+        return [.Amex, .DinersClub, .Discover, .JCB, .MasterCard, .Visa]
     }
-    
+
     public var description: String {
         switch self {
         case Amex:          return "Amex"
         case DinersClub:    return "Diners Club"
         case Discover:      return "Discover"
         case JCB:           return "JCB"
-        case Mastercard:    return "Mastercard"
+        case MasterCard:    return "MasterCard"
         case Visa:          return "Visa"
         }
     }
@@ -87,10 +87,10 @@ public protocol CardTypeConvertible: Luhnable {
 extension String: CardTypeConvertible {
     public func plastic_cardType() throws -> CardType {
         guard self.plastic_luhnValidate() else { throw LuhnError.InvalidCardNumber }
-        
+
         let formatted = self.removeNonDigits()
         guard formatted.characters.count >= 9 else { throw LuhnError.InvalidCardNumber }
-        
+
         var type: CardType?
         for cardType in CardType.allCases {
             if cardType.regex.numberOfMatchesInString(self, options: [], range: NSMakeRange(0, self.characters.count)) > 0 {
