@@ -76,7 +76,7 @@ public enum CardType: CustomStringConvertible {
     }
 }
 
-public enum LuhnError: ErrorType {
+public enum PlasticError: ErrorType {
     case InvalidCardNumber
 }
 
