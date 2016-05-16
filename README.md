@@ -28,3 +28,30 @@
 <p align="center">
   Thank you to <a href="https://twitter.com/MaxKramer">Max Kramer</a> for the <a href="https://github.com/maxkramer/objectiveluhn">initial inspiration</a>.
 </p>
+
+
+<br>
+<br>
+
+## Features
+
+- Check the type of a card number (Amex, DinersClub, Discover, JCB, MasterCard or Visa)
+- Check if a given card number is valid
+
+## Usage
+
+```swift
+let cardNumber = "3782 822463 10005"
+let isValid = cardNumber.plastic_luhnValidate()
+do {
+    print(try cardNumber.plastic_cardType()) // Prints "Amex" in the console
+} catch {
+    // Handle error
+    // Only error that Plastic throws is PlasticError.InvalidCardNumber
+    // Thrown if the card number is < 9 digits and not Luhn valid
+}
+```
+
+## Tests
+
+[Test card numbers](https://github.com/LootApp/Plastic/blob/master/PlasticTests/TestCardNumbers.plist) are [from PayPal](http://www.paypalobjects.com/en_US/vhelp/paypalmanager_help/credit_card_numbers.htm).
