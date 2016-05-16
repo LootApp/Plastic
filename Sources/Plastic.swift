@@ -86,10 +86,10 @@ public protocol CardTypeConvertible: Luhnable {
 
 extension String: CardTypeConvertible {
     public func plastic_cardType() throws -> CardType {
-        guard self.plastic_luhnValidate() else { throw LuhnError.InvalidCardNumber }
+        guard self.plastic_luhnValidate() else { throw PlasticError.InvalidCardNumber }
 
         let formatted = self.removeNonDigits()
-        guard formatted.characters.count >= 9 else { throw LuhnError.InvalidCardNumber }
+        guard formatted.characters.count >= 9 else { throw PlasticError.InvalidCardNumber }
 
         var type: CardType?
         for cardType in CardType.allCases {
@@ -99,7 +99,7 @@ extension String: CardTypeConvertible {
             }
         }
         if let type = type { return type }
-        throw LuhnError.InvalidCardNumber
+        throw PlasticError.InvalidCardNumber
     }
 }
 
