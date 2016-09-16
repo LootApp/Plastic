@@ -15,7 +15,7 @@ class PlasticTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        let path = NSBundle(forClass: self.dynamicType).pathForResource("TestCardNumbers", ofType: "plist")!
+        let path = Bundle(for: type(of: self)).path(forResource: "TestCardNumbers", ofType: "plist")!
         let testNumbers = NSDictionary(contentsOfFile: path)!
         self.validNumbers = testNumbers["valid"] as! [[String : String]]
         self.invalidNumbers = testNumbers["invalid"] as! [String]
@@ -26,7 +26,7 @@ class PlasticTests: XCTestCase {
             let number = numberData["number"]!
             let type = numberData["type"]!
             XCTAssertTrue(number.plastic_luhnValidate())
-            XCTAssertTrue(try! number.plastic_cardType().description.lowercaseString == type)
+            XCTAssertTrue(try! number.plastic_cardType().description.lowercased() == type)
         }
     }
     

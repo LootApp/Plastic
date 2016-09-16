@@ -21,8 +21,8 @@ extension String: Luhnable {
         var oddSum = 0
         var evenSum = 0
 
-        for i in (cleanString.characters.count - 1).stride(through: 0, by: -1) {
-            guard let digit = Int(String(cleanString.characters[cleanString.characters.startIndex.advancedBy(i)])) else { continue }
+        for i in stride(from: (cleanString.characters.count - 1), through: 0, by: -1) {
+            guard let digit = Int(String(cleanString.characters[cleanString.characters.index(cleanString.characters.startIndex, offsetBy: i)])) else { continue }
 
             if isOdd {
                 oddSum += digit
@@ -38,21 +38,21 @@ extension String: Luhnable {
 }
 
 public enum CardType: CustomStringConvertible {
-    case Amex
-    case DinersClub
-    case Discover
-    case JCB
-    case MasterCard
-    case Visa
+    case amex
+    case dinersClub
+    case discover
+    case jcb
+    case masterCard
+    case visa
 
     var regexString: String {
         switch self {
-        case .Amex:         return "^3[47][0-9]{5,}$"
-        case .DinersClub:   return  "^3(?:0[0-5]|[68][0-9])[0-9]{4,}$"
-        case .Discover: 	return "^6(?:011|5[0-9]{2})[0-9]{3,}$"
-        case .JCB:          return "^(?:2131|1800|35[0-9]{3})[0-9]{3,}$"
-        case .MasterCard:   return "^5[1-5][0-9]{5,}$"
-        case .Visa:         return "^4[0-9]{6,}$"
+        case .amex:         return "^3[47][0-9]{5,}$"
+        case .dinersClub:   return  "^3(?:0[0-5]|[68][0-9])[0-9]{4,}$"
+        case .discover: 	return "^6(?:011|5[0-9]{2})[0-9]{3,}$"
+        case .jcb:          return "^(?:2131|1800|35[0-9]{3})[0-9]{3,}$"
+        case .masterCard:   return "^5[1-5][0-9]{5,}$"
+        case .visa:         return "^4[0-9]{6,}$"
         }
     }
 
@@ -61,23 +61,23 @@ public enum CardType: CustomStringConvertible {
     }
 
     static var allCases: [CardType] {
-        return [.Amex, .DinersClub, .Discover, .JCB, .MasterCard, .Visa]
+        return [.amex, .dinersClub, .discover, .jcb, .masterCard, .visa]
     }
 
     public var description: String {
         switch self {
-        case Amex:          return "Amex"
-        case DinersClub:    return "Diners Club"
-        case Discover:      return "Discover"
-        case JCB:           return "JCB"
-        case MasterCard:    return "MasterCard"
-        case Visa:          return "Visa"
+        case .amex:          return "Amex"
+        case .dinersClub:    return "Diners Club"
+        case .discover:      return "Discover"
+        case .jcb:           return "JCB"
+        case .masterCard:    return "MasterCard"
+        case .visa:          return "Visa"
         }
     }
 }
 
-public enum PlasticError: ErrorType {
-    case InvalidCardNumber
+public enum PlasticError: Error {
+    case invalidCardNumber
 }
 
 public protocol CardTypeConvertible: Luhnable {
@@ -86,28 +86,28 @@ public protocol CardTypeConvertible: Luhnable {
 
 extension String: CardTypeConvertible {
     public func plastic_cardType() throws -> CardType {
-        guard self.plastic_luhnValidate() else { throw PlasticError.InvalidCardNumber }
+        guard self.plastic_luhnValidate() else { throw PlasticError.invalidCardNumber }
 
         let formatted = self.removeNonDigits()
-        guard formatted.characters.count >= 9 else { throw PlasticError.InvalidCardNumber }
+        guard formatted.characters.count >= 9 else { throw PlasticError.invalidCardNumber }
 
         var type: CardType?
         for cardType in CardType.allCases {
-            if cardType.regex.numberOfMatchesInString(self, options: [], range: NSMakeRange(0, self.characters.count)) > 0 {
+            if cardType.regex.numberOfMatches(in: self, options: [], range: NSMakeRange(0, self.characters.count)) > 0 {
                 type = cardType
                 break
             }
         }
         if let type = type { return type }
-        throw PlasticError.InvalidCardNumber
+        throw PlasticError.invalidCardNumber
     }
 }
 
 // Helper
 extension String {
-    private func removeNonDigits() -> String {
-        let illegalCharacters = NSCharacterSet.decimalDigitCharacterSet().invertedSet
-        let components = self.componentsSeparatedByCharactersInSet(illegalCharacters)
-        return components.joinWithSeparator("")
+    fileprivate func removeNonDigits() -> String {
+        let illegalCharacters = CharacterSet.decimalDigits.inverted
+        let components = self.components(separatedBy: illegalCharacters)
+        return components.joined(separator: "")
     }
 }
